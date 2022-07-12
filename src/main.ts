@@ -5,7 +5,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { writeFileSync } from 'fs';
 import { AppModule } from './app.module';
 
-const PORT = process.env.APP_PORT || 3000;
+const PORT = process.env.APP_PORT || 5000;
 
 async function start() {
     const app = await NestFactory.create(AppModule);
