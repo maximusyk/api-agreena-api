@@ -1,12 +1,7 @@
 import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from 'sequelize-typescript';
 import { User } from '../../users/entities/user.entity';
 
-@Table({
-    tableName: 'tokens',
-    paranoid: true,
-    defaultScope: { attributes: { exclude: ['deletedAt'] } },
-    scopes: { withDeletedAt: { attributes: { include: ['deletedAt'] } } },
-})
+@Table({ tableName: 'tokens' })
 export class Token extends Model<Token> {
     @Column({
         type: DataType.UUID,
@@ -31,7 +26,4 @@ export class Token extends Model<Token> {
 
     @Column({ type: DataType.DATE, allowNull: false })
     updatedAt: Date;
-
-    @Column({ type: DataType.DATE })
-    deletedAt: Date;
 }

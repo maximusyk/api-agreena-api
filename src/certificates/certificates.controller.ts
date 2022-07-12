@@ -1,10 +1,10 @@
 import { Body, Controller, Get, Patch } from '@nestjs/common';
-import { CertificatesService } from './certificates.service';
-import { CertificateEntityDto, TransferCertificateDto } from './dto/certificates.dto';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { AuthAccess } from '../auth/decorators/auth.decorator';
 import { GetCurrentUser } from '../auth/decorators/get-current-user.decorator';
 import { JwtAccessPayload } from '../auth/strategies/access-token.strategy';
-import { AuthAccess } from '../auth/decorators/auth.decorator';
+import { CertificatesService } from './certificates.service';
+import { CertificateEntityDto, TransferCertificateDto } from './dto/certificates.dto';
 
 @Controller('certificates')
 @ApiTags('Certificates')

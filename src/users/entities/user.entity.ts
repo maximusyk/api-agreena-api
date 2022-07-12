@@ -1,13 +1,8 @@
 import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
-import { CreateUserDto } from '../dto/users.dto';
 import { Certificate } from '../../certificates/entities/certificate.entity';
+import { CreateUserDto } from '../dto/users.dto';
 
-@Table({
-    tableName: 'users',
-    paranoid: true,
-    defaultScope: { attributes: { exclude: ['deletedAt'] } },
-    scopes: { withDeletedAt: { attributes: { include: ['deletedAt'] } } },
-})
+@Table({ tableName: 'users' })
 export class User extends Model<User, CreateUserDto> {
     @Column({
         type: DataType.UUID,
@@ -43,7 +38,4 @@ export class User extends Model<User, CreateUserDto> {
 
     @Column({ type: DataType.DATE, allowNull: false })
     updatedAt: Date;
-
-    @Column({ type: DataType.DATE })
-    deletedAt: Date;
 }

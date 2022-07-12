@@ -1,11 +1,11 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { CreateUserDto, UpdateUserDto, UserEntityDto } from './dto/users.dto';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { ParamsIdDto } from '../dto/main.dto';
 import { AuthAccess } from '../auth/decorators/auth.decorator';
 import { GetCurrentUser } from '../auth/decorators/get-current-user.decorator';
 import { JwtAccessPayload } from '../auth/strategies/access-token.strategy';
+import { ParamsIdDto } from '../dto/main.dto';
+import { CreateUserDto, UpdateUserDto, UserEntityDto } from './dto/users.dto';
+import { UsersService } from './users.service';
 
 @Controller('users')
 @ApiTags('Users')

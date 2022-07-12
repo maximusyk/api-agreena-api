@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { TransferCertificateDto } from './dto/certificates.dto';
-import { Certificate } from './entities/certificate.entity';
 import { InjectModel } from '@nestjs/sequelize';
 import { UsersService } from '../users/users.service';
+import { TransferCertificateDto } from './dto/certificates.dto';
+import { Certificate } from './entities/certificate.entity';
 import { CertificateStatusEnum } from './enums/certificates.enum';
 
 @Injectable()
@@ -38,9 +38,12 @@ export class CertificatesService {
     async findById(id: string) {
         try {
             const certificate = await this.certificateRepository.findByPk(id, { include: { all: true } });
-            if (!certificate) throw new HttpException('Certificate not found!', HttpStatus.NOT_FOUND);
-            await certificate.reload({ include: { all: true } });
-            return certificate;
+
+            if (!certificate) {
+                throw new HttpException('Certificate not found!', HttpStatus.NOT_FOUND);
+            }
+
+            return certificate.reload({ include: { all: true } });
         } catch (error) {
             throw new HttpException(error.message, error?.status || HttpStatus.BAD_REQUEST);
         }
@@ -48,7 +51,9 @@ export class CertificatesService {
 
     async findMyCertificates(currentUserId: string) {
         try {
-            if (!currentUserId) throw new HttpException('currentUserId is required!', HttpStatus.NOT_FOUND);
+            if (!currentUserId) {
+                throw new HttpException('currentUserId is required!', HttpStatus.NOT_FOUND);
+            }
 
             await this.usersService.findById(currentUserId);
 

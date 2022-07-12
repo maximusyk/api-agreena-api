@@ -2,12 +2,7 @@ import { BelongsTo, Column, DataType, ForeignKey, Model, Table } from 'sequelize
 import { User } from '../../users/entities/user.entity';
 import { CertificateStatusEnum } from '../enums/certificates.enum';
 
-@Table({
-    tableName: 'certificates',
-    paranoid: true,
-    defaultScope: { attributes: { exclude: ['deletedAt'] } },
-    scopes: { withDeletedAt: { attributes: { include: ['deletedAt'] } } },
-})
+@Table({ tableName: 'certificates' })
 export class Certificate extends Model<Certificate> {
     @Column({
         type: DataType.UUID,
@@ -35,7 +30,4 @@ export class Certificate extends Model<Certificate> {
 
     @Column({ type: DataType.DATE, allowNull: false })
     updatedAt: Date;
-
-    @Column({ type: DataType.DATE })
-    deletedAt: Date;
 }

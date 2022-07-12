@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { UsersModule } from './users/users.module';
-import { CertificatesModule } from './certificates/certificates.module';
-import { TokensModule } from './tokens/tokens.module';
 import { AuthModule } from './auth/auth.module';
-import { User } from './users/entities/user.entity';
+import { CertificatesModule } from './certificates/certificates.module';
 import { Certificate } from './certificates/entities/certificate.entity';
 import { Token } from './tokens/entities/token.entity';
+import { TokensModule } from './tokens/tokens.module';
+import { User } from './users/entities/user.entity';
+import { UsersModule } from './users/users.module';
 
 @Module({
     imports: [

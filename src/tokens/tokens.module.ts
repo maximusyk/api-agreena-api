@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { TokensService } from './tokens.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Token } from './entities/token.entity';
+import { TokensService } from './tokens.service';
 
 @Module({
     imports: [

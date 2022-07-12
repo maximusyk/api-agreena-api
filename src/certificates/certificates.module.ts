@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { CertificatesService } from './certificates.service';
-import { CertificatesController } from './certificates.controller';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { Certificate } from './entities/certificate.entity';
 import { UsersModule } from '../users/users.module';
+import { CertificatesController } from './certificates.controller';
+import { CertificatesService } from './certificates.service';
+import { Certificate } from './entities/certificate.entity';
 
 @Module({
     imports: [

@@ -1,14 +1,14 @@
 import { Body, Controller, Post, Res } from '@nestjs/common';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { AuthService } from './auth.service';
-import { CreateUserDto } from '../users/dto/users.dto';
-import { AuthTokensDto, SigninLocalDto } from './dto/auth.dto';
-import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
-import { JwtRefreshPayload } from './strategies/refresh-token.strategy';
-import { GetCurrentUser } from './decorators/get-current-user.decorator';
-import { JwtAccessPayload } from './strategies/access-token.strategy';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
+import { CreateUserDto } from '../users/dto/users.dto';
+import { AuthService } from './auth.service';
 import { AuthAccess, AuthRefresh } from './decorators/auth.decorator';
+import { GetCurrentUser } from './decorators/get-current-user.decorator';
+import { AuthTokensDto, SigninLocalDto } from './dto/auth.dto';
+import { JwtAccessPayload } from './strategies/access-token.strategy';
+import { JwtRefreshPayload } from './strategies/refresh-token.strategy';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -43,7 +43,7 @@ export class AuthController {
         response.cookie(
             'refreshToken',
             tokens.refreshToken,
-            { httpOnly: true, expires: this.configService.get('JWT_REFESH_TOKEN_LIFETIME') },
+            { httpOnly: true, expires: this.configService.get('JWT_REFRESH_TOKEN_LIFETIME') },
         );
         return tokens;
     }
@@ -77,7 +77,7 @@ export class AuthController {
         response.cookie(
             'refreshToken',
             tokens.refreshToken,
-            { httpOnly: true, expires: this.configService.get('JWT_REFESH_TOKEN_LIFETIME') },
+            { httpOnly: true, expires: this.configService.get('JWT_REFRESH_TOKEN_LIFETIME') },
         );
         return tokens;
     }

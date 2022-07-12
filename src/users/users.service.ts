@@ -1,9 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateUserDto, RegisterUserDto, UpdateUserDto } from './dto/users.dto';
 import { InjectModel } from '@nestjs/sequelize';
-import { User } from './entities/user.entity';
-import { Op } from 'sequelize';
 import * as bcrypt from 'bcrypt';
+import { Op } from 'sequelize';
+import { checkStringHash } from '../utils/check-string-hash.util';
+import { CreateUserDto, RegisterUserDto, UpdateUserDto } from './dto/users.dto';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
@@ -13,34 +14,11 @@ export class UsersService {
 
     async create(createUserDto: CreateUserDto | RegisterUserDto) {
         try {
-            const isDeleted = await this.userRepository.scope('withDeletedAt').findOne({
-                paranoid: false,
-                where: { email: createUserDto.email },
-            });
-
-            if (isDeleted && isDeleted?.deletedAt === null) {
-                throw new HttpException('User with this email already exists!', HttpStatus.BAD_REQUEST);
+            if (!checkStringHash(createUserDto.password)) {
+                createUserDto.password = await bcrypt.hash(createUserDto.password, 10);
             }
 
-            const hashedPassword = 'hashedPassword' in createUserDto
-                ? createUserDto.hashedPassword
-                : await bcrypt.hash(createUserDto.password, 10);
-
-            if (isDeleted) {
-                await isDeleted.restore();
-                const user = await isDeleted.update(createUserDto);
-                await user.reload({ include: { all: true } });
-
-                return user;
-            } else {
-                const newUser = await this.userRepository.create(
-                    { ...createUserDto, password: hashedPassword },
-                    { include: { all: true } },
-                );
-                await newUser.reload({ include: { all: true } });
-
-                return newUser;
-            }
+            return this.userRepository.create(createUserDto, { include: { all: true } });
         } catch (error) {
             throw new HttpException(error.message, error?.status || HttpStatus.BAD_REQUEST);
         }
@@ -57,9 +35,12 @@ export class UsersService {
     async findById(id: string) {
         try {
             const user = await this.userRepository.findByPk(id, { include: { all: true } });
-            if (!user) throw new HttpException('User not found!', HttpStatus.NOT_FOUND);
-            await user.reload({ include: { all: true } });
-            return user;
+
+            if (!user) {
+                throw new HttpException('User not found!', HttpStatus.NOT_FOUND);
+            }
+
+            return user.reload({ include: { all: true } });
         } catch (error) {
             throw new HttpException(error.message, error?.status || HttpStatus.BAD_REQUEST);
         }
@@ -77,10 +58,12 @@ export class UsersService {
                     },
                 },
             );
-            if (!user) throw new HttpException('User with given login does not exist!', HttpStatus.NOT_FOUND);
 
-            await user.reload({ include: { all: true } });
-            return user;
+            if (!user) {
+                throw new HttpException('User with given login does not exist!', HttpStatus.NOT_FOUND);
+            }
+
+            return user.reload({ include: { all: true } });
         } catch (error) {
             throw new HttpException(error.message, error?.status || HttpStatus.BAD_REQUEST);
         }
@@ -99,10 +82,8 @@ export class UsersService {
             if (!id) {
                 throw new HttpException('id is required!', HttpStatus.BAD_REQUEST);
             }
-            const chapter = await this.userRepository.scope('withDeletedAt').findOne({ where: { id } });
-            if (!chapter) {
-                throw new HttpException('Chapter not found!', HttpStatus.NOT_FOUND);
-            }
+
+            const chapter = await this.findById(id);
 
             await chapter.destroy();
 

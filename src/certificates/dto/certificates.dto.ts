@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 import { UserEntityDto } from '../../users/dto/users.dto';
 import { User } from '../../users/entities/user.entity';
 import { CertificateStatusEnum } from '../enums/certificates.enum';
-import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 
 export class CertificateEntityDto {
     @ApiProperty()

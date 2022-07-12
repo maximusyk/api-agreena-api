@@ -1,9 +1,9 @@
-import { PassportStrategy } from '@nestjs/passport';
-import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Injectable } from '@nestjs/common';
-import { JwtAccessPayload } from './access-token.strategy';
 import { ConfigService } from '@nestjs/config';
+import { PassportStrategy } from '@nestjs/passport';
 import { Request } from 'express';
+import { ExtractJwt, Strategy } from 'passport-jwt';
+import { JwtAccessPayload } from './access-token.strategy';
 
 export type JwtRefreshPayload = JwtAccessPayload & {
     refreshToken: string;

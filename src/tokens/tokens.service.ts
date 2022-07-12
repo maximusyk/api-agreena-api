@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateUpdateTokenDto } from './dto/tokens.dto';
 import { InjectModel } from '@nestjs/sequelize';
+import { CreateUpdateTokenDto } from './dto/tokens.dto';
 import { Token } from './entities/token.entity';
 
 @Injectable()
@@ -11,7 +11,8 @@ export class TokensService {
 
     async createOrUpdate(userId: string, refreshToken: string) {
         try {
-            const existedToken = await this.findOne(userId, true);
+            const existedToken = await this.tokenRepository.findOne({ where: { userId } });
+
             if (existedToken) {
                 return this.update(userId, refreshToken);
             }
@@ -30,12 +31,13 @@ export class TokensService {
         }
     }
 
-    async findOne(userId: string, isOnlyCheck = false) {
+    async findOne(userId: string) {
         try {
-            if (isOnlyCheck) return this.tokenRepository.findOne({ where: { userId } });
-
             const token = await this.tokenRepository.findOne({ where: { userId }, include: { all: true } });
-            if (!token) throw new HttpException('Token not found!', HttpStatus.NOT_FOUND);
+
+            if (!token) {
+                throw new HttpException('Token not found!', HttpStatus.NOT_FOUND);
+            }
 
             return token;
         } catch (error) {
@@ -45,7 +47,9 @@ export class TokensService {
 
     async update(id: string, refreshToken: string) {
         try {
-            return this.tokenRepository.update({ refreshToken }, { where: { id } });
+            const token = await this.findOne(id);
+
+            return token.update({ refreshToken }, { where: { id } });
         } catch (error) {
             throw new HttpException(error.message, error?.status || HttpStatus.BAD_REQUEST);
         }
@@ -53,8 +57,12 @@ export class TokensService {
 
     async removeByUser(userId: string) {
         try {
-            if (!userId) throw new HttpException('User id is required!', HttpStatus.BAD_REQUEST);
-            const token = await this.tokenRepository.findOne({ where: { userId } });
+            if (!userId) {
+                throw new HttpException('User id is required!', HttpStatus.BAD_REQUEST);
+            }
+
+            const token = await this.findOne(userId);
+
             if (!token) {
                 throw new HttpException('User already logout!', HttpStatus.NOT_FOUND);
             }
