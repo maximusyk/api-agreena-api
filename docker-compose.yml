@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  api:
+    container_name: agreena_api
+    image: agreena_api:1.0.0
+    restart: unless-stopped
+    build: .
+    entrypoint: sh docker-entrypoint.sh
+    env_file:
+      - .production.env
+    ports:
+      - 7070:7070
+    networks:
+      - agreena-network
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_HOST: postgres
+    links:
+      - postgres:postgres
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+  postgres:
+    image: postgres:alpine
+    restart: always
+    env_file:
+      - .production.env
+    environment:
+      POSTGRES_PASSWORD: $DATABASE_PASSWORD
+
+  adminer:
+    image: adminer
+    restart: always
+    env_file:
+      - .production.env
+    ports:
+      - 8080:8080
+
+networks:
+  agreena-network:
+    driver: bridge
