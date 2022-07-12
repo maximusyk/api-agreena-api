@@ -16,4 +16,3 @@ COPY --from=build /usr/src/app/migrations ./
 COPY --from=build /usr/src/app/seeders ./
 RUN npm install --only=production
 COPY --from=build /usr/src/app/dist ./dist
-CMD ["sh", "docker-entrypoint.sh"]
