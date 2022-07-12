@@ -5,7 +5,7 @@ import * as fs from 'fs';
 import { ConfigService } from '@nestjs/config';
 import { ValidationPipe } from '@nestjs/common';
 
-const PORT = process.env.APP_PORT || 5000;
+const PORT = process.env.APP_PORT || 3000;
 
 async function start() {
     const app = await NestFactory.create(AppModule);
