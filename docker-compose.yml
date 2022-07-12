@@ -13,7 +13,7 @@ services:
     env_file:
       - .production.env
     ports:
-      - $APP_PORT:$APP_PORT
+      - $PORT:$PORT
     networks:
       - agreena-network
     depends_on:

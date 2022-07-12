@@ -5,7 +5,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { writeFileSync } from 'fs';
 import { AppModule } from './app.module';
 
-const PORT = process.env.APP_PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
 async function start() {
     const app = await NestFactory.create(AppModule);
@@ -18,7 +18,11 @@ async function start() {
     .setTitle('Agreena API')
     .setVersion('1.0')
     .addServer(
-        'http://localhost:' + configService.get('APP_PORT'),
+        'https://api-agreena-api.herokuapp.com',
+        'Agreena Remote',
+    )
+    .addServer(
+        'http://localhost:' + configService.get('PORT'),
         'Agreena Local',
     )
     .addBearerAuth()
