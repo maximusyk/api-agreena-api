@@ -1,3 +1,6 @@
+FROM postgres:alpine as postgres
+WORKDIR /usr/src/app/postgres
+
 FROM node:16.3.0-alpine as build
 WORKDIR /usr/src/app
 COPY package*.json ./
