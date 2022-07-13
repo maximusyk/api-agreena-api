@@ -17,16 +17,16 @@ services:
     networks:
       - agreena-network
     depends_on:
-      - agreena_db
+      - postgres
     environment:
       DATABASE_HOST: agreena_db
     links:
-      - agreena_db:agreena_db
+      - postgres:postgres
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
 
-  agreena_db:
+  postgres:
     image: postgres:alpine
     container_name: agreena_db
     restart: always
