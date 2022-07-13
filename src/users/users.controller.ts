@@ -19,6 +19,23 @@ export class UsersController {
             description: 'User successfully created',
         },
     )
+    @ApiResponse({
+        status: 400,
+        description: 'Required attributes were missing',
+    })
+    @ApiResponse({
+        status: 401,
+        description: 'Unauthorized',
+    })
+    @ApiResponse({
+        status: 403,
+        description: 'Access to the requested resource is forbidden',
+    })
+    @ApiResponse({
+        status: 500,
+        description:
+            'The server encountered an unexpected condition that prevented it from fulfilling the request',
+    })
     @ApiBearerAuth()
     @AuthAccess()
     @Post()
@@ -34,6 +51,23 @@ export class UsersController {
             description: 'Get all users',
         },
     )
+    @ApiResponse({
+        status: 400,
+        description: 'Required attributes were missing',
+    })
+    @ApiResponse({
+        status: 401,
+        description: 'Unauthorized',
+    })
+    @ApiResponse({
+        status: 403,
+        description: 'Access to the requested resource is forbidden',
+    })
+    @ApiResponse({
+        status: 500,
+        description:
+            'The server encountered an unexpected condition that prevented it from fulfilling the request',
+    })
     @ApiBearerAuth()
     @AuthAccess()
     @Get()
@@ -45,9 +79,27 @@ export class UsersController {
         {
             status: 200,
             type: UserEntityDto,
+            isArray: true,
             description: 'Update user by ID',
         },
     )
+    @ApiResponse({
+        status: 400,
+        description: 'Required attributes were missing',
+    })
+    @ApiResponse({
+        status: 401,
+        description: 'Unauthorized',
+    })
+    @ApiResponse({
+        status: 403,
+        description: 'Access to the requested resource is forbidden',
+    })
+    @ApiResponse({
+        status: 500,
+        description:
+            'The server encountered an unexpected condition that prevented it from fulfilling the request',
+    })
     @ApiBearerAuth()
     @AuthAccess()
     @Get('/me')
@@ -62,6 +114,27 @@ export class UsersController {
             description: 'Get user by ID',
         },
     )
+    @ApiResponse({
+        status: 400,
+        description: 'Required attributes were missing',
+    })
+    @ApiResponse({
+        status: 401,
+        description: 'Unauthorized',
+    })
+    @ApiResponse({
+        status: 403,
+        description: 'Access to the requested resource is forbidden',
+    })
+    @ApiResponse({
+        status: 404,
+        description: 'User not found',
+    })
+    @ApiResponse({
+        status: 500,
+        description:
+            'The server encountered an unexpected condition that prevented it from fulfilling the request',
+    })
     @ApiBearerAuth()
     @AuthAccess()
     @Get(':id')
@@ -76,6 +149,27 @@ export class UsersController {
             description: 'Update user by ID',
         },
     )
+    @ApiResponse({
+        status: 400,
+        description: 'Required attributes were missing',
+    })
+    @ApiResponse({
+        status: 401,
+        description: 'Unauthorized',
+    })
+    @ApiResponse({
+        status: 403,
+        description: 'Access to the requested resource is forbidden',
+    })
+    @ApiResponse({
+        status: 404,
+        description: 'User not found',
+    })
+    @ApiResponse({
+        status: 500,
+        description:
+            'The server encountered an unexpected condition that prevented it from fulfilling the request',
+    })
     @ApiBearerAuth()
     @AuthAccess()
     @Patch(':id')
@@ -89,6 +183,27 @@ export class UsersController {
             description: 'Remove user by ID',
         },
     )
+    @ApiResponse({
+        status: 400,
+        description: 'Required attributes were missing',
+    })
+    @ApiResponse({
+        status: 401,
+        description: 'Unauthorized',
+    })
+    @ApiResponse({
+        status: 403,
+        description: 'Access to the requested resource is forbidden',
+    })
+    @ApiResponse({
+        status: 404,
+        description: 'User not found',
+    })
+    @ApiResponse({
+        status: 500,
+        description:
+            'The server encountered an unexpected condition that prevented it from fulfilling the request',
+    })
     @ApiBearerAuth()
     @AuthAccess()
     @Delete(':id')

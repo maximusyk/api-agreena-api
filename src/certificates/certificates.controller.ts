@@ -18,6 +18,27 @@ export class CertificatesController {
             description: 'Transfer my certificate',
         },
     )
+    @ApiResponse({
+        status: 400,
+        description: 'Required attributes were missing',
+    })
+    @ApiResponse({
+        status: 401,
+        description: 'Unauthorized',
+    })
+    @ApiResponse({
+        status: 403,
+        description: 'Access to the requested resource is forbidden',
+    })
+    @ApiResponse({
+        status: 404,
+        description: 'User receiver not found',
+    })
+    @ApiResponse({
+        status: 500,
+        description:
+            'The server encountered an unexpected condition that prevented it from fulfilling the request',
+    })
     @ApiBearerAuth()
     @AuthAccess()
     @Patch('transfer')
@@ -33,6 +54,23 @@ export class CertificatesController {
             description: 'Find my certificates',
         },
     )
+    @ApiResponse({
+        status: 400,
+        description: 'Required attributes were missing',
+    })
+    @ApiResponse({
+        status: 401,
+        description: 'Unauthorized',
+    })
+    @ApiResponse({
+        status: 403,
+        description: 'Access to the requested resource is forbidden',
+    })
+    @ApiResponse({
+        status: 500,
+        description:
+            'The server encountered an unexpected condition that prevented it from fulfilling the request',
+    })
     @ApiBearerAuth()
     @AuthAccess()
     @Get('/my')
@@ -48,6 +86,23 @@ export class CertificatesController {
             description: 'Available certificates',
         },
     )
+    @ApiResponse({
+        status: 400,
+        description: 'Required attributes were missing',
+    })
+    @ApiResponse({
+        status: 401,
+        description: 'Unauthorized',
+    })
+    @ApiResponse({
+        status: 403,
+        description: 'Access to the requested resource is forbidden',
+    })
+    @ApiResponse({
+        status: 500,
+        description:
+            'The server encountered an unexpected condition that prevented it from fulfilling the request',
+    })
     @ApiBearerAuth()
     @AuthAccess()
     @Get('/available')

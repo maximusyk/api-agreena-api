@@ -25,6 +25,19 @@ export class AuthController {
             description: 'User successfully registered and signed in',
         },
     )
+    @ApiResponse({
+        status: 400,
+        description: 'Required attributes were missing',
+    })
+    @ApiResponse({
+        status: 403,
+        description: 'Access to the requested resource is forbidden',
+    })
+    @ApiResponse({
+        status: 500,
+        description:
+            'The server encountered an unexpected condition that prevented it from fulfilling the request',
+    })
     @Post('/local/signup')
     signupLocal(@Body() signupData: CreateUserDto): Promise<AuthTokensDto> {
         return this.authService.signupLocal(signupData);
@@ -37,6 +50,19 @@ export class AuthController {
             description: 'User successfully signed in',
         },
     )
+    @ApiResponse({
+        status: 400,
+        description: 'Required attributes were missing',
+    })
+    @ApiResponse({
+        status: 403,
+        description: 'Access to the requested resource is forbidden',
+    })
+    @ApiResponse({
+        status: 500,
+        description:
+            'The server encountered an unexpected condition that prevented it from fulfilling the request',
+    })
     @Post('/local/signin')
     async signinLocal(@Body() signinData: SigninLocalDto, @Res({ passthrough: true }) response: Response): Promise<AuthTokensDto> {
         const tokens = await this.authService.signinLocal(signinData);
@@ -54,6 +80,23 @@ export class AuthController {
             description: 'User successfully logged out',
         },
     )
+    @ApiResponse({
+        status: 400,
+        description: 'Required attributes were missing',
+    })
+    @ApiResponse({
+        status: 401,
+        description: 'Unauthorized',
+    })
+    @ApiResponse({
+        status: 403,
+        description: 'Access to the requested resource is forbidden',
+    })
+    @ApiResponse({
+        status: 500,
+        description:
+            'The server encountered an unexpected condition that prevented it from fulfilling the request',
+    })
     @ApiBearerAuth()
     @AuthAccess()
     @Post('/logout')
@@ -69,6 +112,23 @@ export class AuthController {
             description: 'User tokens successfully refreshed',
         },
     )
+    @ApiResponse({
+        status: 400,
+        description: 'Required attributes were missing',
+    })
+    @ApiResponse({
+        status: 401,
+        description: 'Unauthorized',
+    })
+    @ApiResponse({
+        status: 403,
+        description: 'Access to the requested resource is forbidden',
+    })
+    @ApiResponse({
+        status: 500,
+        description:
+            'The server encountered an unexpected condition that prevented it from fulfilling the request',
+    })
     @ApiBearerAuth()
     @AuthRefresh()
     @Post('/refresh')

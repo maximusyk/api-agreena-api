@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { TokensService } from '../tokens/tokens.service';
@@ -12,6 +13,7 @@ export class AuthService {
         private readonly jwtService: JwtService,
         private readonly usersService: UsersService,
         private readonly tokensService: TokensService,
+        private readonly configService: ConfigService,
     ) {}
 
     hashData(data: string) {
@@ -27,11 +29,17 @@ export class AuthService {
             const [accessToken, refreshToken] = await Promise.all([
                 this.jwtService.signAsync(
                     { sub: userId, email },
-                    { secret: process.env.JWT_SECRET_ACCESS_KEY, expiresIn: process.env.JWT_ACCESS_TOKEN_LIFETIME },
+                    {
+                        secret: this.configService.get('JWT_SECRET_ACCESS_KEY'),
+                        expiresIn: this.configService.get('JWT_ACCESS_TOKEN_LIFETIME'),
+                    },
                 ),
                 this.jwtService.signAsync(
                     { sub: userId, email },
-                    { secret: process.env.JWT_SECRET_REFRESH_KEY, expiresIn: process.env.JWT_REFRESH_TOKEN_LIFETIME },
+                    {
+                        secret: this.configService.get('JWT_SECRET_REFRESH_KEY'),
+                        expiresIn: this.configService.get('JWT_REFRESH_TOKEN_LIFETIME'),
+                    },
                 ),
             ]);
 

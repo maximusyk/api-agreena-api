@@ -9,9 +9,11 @@ import { TokensModule } from './tokens/tokens.module';
 import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
 
+const ENV_PATH = process.env.NODE_ENV ? `.${process.env.NODE_ENV}.env` : '.env';
+
 @Module({
     imports: [
-        ConfigModule.forRoot({ isGlobal: true, envFilePath: `.${process.env.NODE_ENV}.env` }),
+        ConfigModule.forRoot({ isGlobal: true, envFilePath: ENV_PATH }),
         SequelizeModule.forRootAsync({
             imports: [ConfigModule],
             inject: [ConfigService],
