@@ -11,4 +11,5 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install --only=production
 COPY --from=build /usr/src/app/dist ./dist
+RUN ls
 CMD ["sh", "docker-entrypoint.sh"]
