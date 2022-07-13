@@ -26,6 +26,8 @@ console.log(ENV_PATH);
                 username: config.get('DATABASE_USER'),
                 password: config.get('DATABASE_PASSWORD'),
                 database: config.get('DATABASE_NAME'),
+                autoLoadModels: false,
+                synchronize: false,
                 models: [
                     User,
                     Certificate,
