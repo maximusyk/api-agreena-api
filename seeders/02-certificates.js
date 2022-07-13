@@ -10,8 +10,10 @@ module.exports = {
             '76da5cbd-d613-4d0d-b341-e44d8888feaf',
             'f76672c0-c13c-4150-926a-67a567211369',
         ];
+
         const date = new Date;
         const certificates = [];
+
         for (let i = 0; i < 100; i++) {
             const certificate = {
                 id: uuidv4(),
@@ -20,10 +22,12 @@ module.exports = {
                 createdAt: date,
                 updatedAt: date,
             };
+
             if (ownerIds[i]) {
                 certificate.status = 'Owned';
                 certificate.ownerId = ownerIds[i];
             }
+            
             certificates.push(certificate);
         }
 

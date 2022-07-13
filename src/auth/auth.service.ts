@@ -31,14 +31,14 @@ export class AuthService {
                     { sub: userId, email },
                     {
                         secret: this.configService.get('JWT_SECRET_ACCESS_KEY'),
-                        expiresIn: this.configService.get('JWT_ACCESS_TOKEN_LIFETIME'),
+                        expiresIn: eval(this.configService.get('JWT_ACCESS_TOKEN_LIFETIME')),
                     },
                 ),
                 this.jwtService.signAsync(
                     { sub: userId, email },
                     {
                         secret: this.configService.get('JWT_SECRET_REFRESH_KEY'),
-                        expiresIn: this.configService.get('JWT_REFRESH_TOKEN_LIFETIME'),
+                        expiresIn: eval(this.configService.get('JWT_REFRESH_TOKEN_LIFETIME')),
                     },
                 ),
             ]);
@@ -52,9 +52,7 @@ export class AuthService {
     async signupLocal(signupData: CreateUserDto): Promise<AuthTokensDto> {
         try {
             const hashedPassword = await this.hashData(signupData.password);
-
             const user = await this.usersService.create({ ...signupData, hashedPassword });
-
             const signedTokens = await this.signTokens(user.id, user.email);
 
             await this.tokensService.createOrUpdate(user.id, await this.hashData(signedTokens.refreshToken));
@@ -68,13 +66,18 @@ export class AuthService {
     async signinLocal(signinData: SigninLocalDto): Promise<AuthTokensDto> {
         try {
             const user = await this.usersService.findByLogin(signinData.email);
-            if (!user) throw new HttpException('User with this email does not exist!', HttpStatus.BAD_REQUEST);
+
+            if (!user) {
+                throw new HttpException('User with this email does not exist!', HttpStatus.BAD_REQUEST);
+            }
 
             const isPasswordMatches = await bcrypt.compare(signinData.password, user.password);
-            if (!isPasswordMatches) throw new HttpException('Password is incorrect!', HttpStatus.BAD_REQUEST);
+
+            if (!isPasswordMatches) {
+                throw new HttpException('Password is incorrect!', HttpStatus.BAD_REQUEST);
+            }
 
             const signedTokens = await this.signTokens(user.id, user.email);
-
             await this.tokensService.createOrUpdate(user.id, await this.hashData(signedTokens.refreshToken));
 
             return signedTokens;
@@ -94,16 +97,18 @@ export class AuthService {
     async refreshTokens(userId: string, refreshToken: string) {
         try {
             const token = await this.tokensService.findOne(userId);
-            if (!token) throw new HttpException('User token not found!', HttpStatus.BAD_REQUEST);
+
+            if (!token) {
+                throw new HttpException('User token not found!', HttpStatus.BAD_REQUEST);
+            }
 
             const isRefreshTokenMatches = await bcrypt.compare(refreshToken, token.refreshToken);
-            if (!isRefreshTokenMatches) throw new HttpException(
-                'Refresh token is incorrect!',
-                HttpStatus.BAD_REQUEST,
-            );
+
+            if (!isRefreshTokenMatches) {
+                throw new HttpException('Refresh token is incorrect!', HttpStatus.BAD_REQUEST);
+            }
 
             const signedTokens = await this.signTokens(token.user.id, token.user.email);
-
             await this.tokensService.createOrUpdate(token.user.id, await this.hashData(signedTokens.refreshToken));
 
             return signedTokens;

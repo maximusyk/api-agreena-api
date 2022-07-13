@@ -41,7 +41,7 @@ export class CertificatesController {
     })
     @ApiBearerAuth()
     @AuthAccess()
-    @Patch('transfer')
+    @Patch('/transfer')
     transferCurrentUserCertificate(@GetCurrentUser() user: JwtAccessPayload, @Body() transferCertificateDto: TransferCertificateDto) {
         return this.certificatesService.transferCurrentUserCertificate(user?.sub, transferCertificateDto);
     }

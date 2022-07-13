@@ -15,9 +15,7 @@ export class CertificatesService {
     async transferCurrentUserCertificate(currentUserId: string, transferCertificateDto: TransferCertificateDto) {
         try {
             const currentUser = await this.usersService.findById(currentUserId);
-
             await this.usersService.findById(transferCertificateDto.ownerId);
-
             const certificateToTransfer = await this.findById(transferCertificateDto.certificateId);
 
             if (!currentUser.certificates.some((certificate) => certificate.id === transferCertificateDto.certificateId)) {

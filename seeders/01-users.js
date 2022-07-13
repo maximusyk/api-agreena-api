@@ -1,5 +1,3 @@
-// noinspection SpellCheckingInspection
-
 'use strict';
 
 module.exports = {

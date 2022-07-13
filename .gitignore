@@ -106,3 +106,5 @@ dist
 # IDE's files
 .idea
 .vscode
+
+.editorconfig

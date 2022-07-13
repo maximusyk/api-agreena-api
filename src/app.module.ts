@@ -11,6 +11,8 @@ import { UsersModule } from './users/users.module';
 
 const ENV_PATH = process.env.NODE_ENV ? `.${process.env.NODE_ENV}.env` : '.env';
 
+console.log(ENV_PATH);
+
 @Module({
     imports: [
         ConfigModule.forRoot({ isGlobal: true, envFilePath: ENV_PATH }),

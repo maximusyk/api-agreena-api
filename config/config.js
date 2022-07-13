@@ -6,6 +6,7 @@ module.exports = {
         port: process.env.DATABASE_PORT,
         host: process.env.DATABASE_HOST,
         dialect: process.env.DATABASE_DIALECT,
+        seederStorage: 'sequelize',
         logging: true,
     },
     production: {
@@ -15,6 +16,7 @@ module.exports = {
         port: process.env.DATABASE_PORT,
         host: process.env.DATABASE_HOST,
         dialect: process.env.DATABASE_DIALECT,
+        seederStorage: 'sequelize',
     },
     docker: {
         username: process.env.DATABASE_USER,
@@ -23,5 +25,6 @@ module.exports = {
         port: process.env.DATABASE_PORT,
         host: process.env.DATABASE_HOST,
         dialect: process.env.DATABASE_DIALECT,
+        seederStorage: 'sequelize',
     },
 };

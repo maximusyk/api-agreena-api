@@ -1,1 +1,1 @@
-sleep 20 && npm run db:create:prod && npm run db:migrate:prod && npm run db:seed:all:prod && npm run start:prod
+npx sequelize-cli db:migrate --env production && npx sequelize-cli db:seed:all --env production && npm run start:prod

@@ -48,8 +48,10 @@ $ npm run start:prod
 Before start docker run this commands:
 
 ```bash
-$ npm install
+$ npm install 
 $ npm run build
+$ docker-compose build --no-cache
+$ docker-compose up -d --force-recreate
 ```
 
 #
@@ -61,7 +63,7 @@ $ npm run build
 $ docker-compose up -d --build api
 
 # postgres - if you need only PostgreSQL
-$ docker-compose up -d --build postgres adminer
+$ docker-compose up -d --build agreena_db adminer
 ```
 
 #
