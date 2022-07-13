@@ -66,7 +66,7 @@ export class AuthController {
     @Post('/local/signin')
     async signinLocal(@Body() signinData: SigninLocalDto, @Res({ passthrough: true }) response: Response): Promise<AuthTokensDto> {
         const tokens = await this.authService.signinLocal(signinData);
-        const expiresDate = Date.now() + eval(this.configService.get('JWT_REFRESH_TOKEN_LIFETIME'));
+        const expiresDate = Date.now() + eval(this.configService.get('JWT_REFRESH_TOKEN_LIFETIME') || '60*60*24*30');
         response.cookie(
             'refreshToken',
             tokens.refreshToken,
@@ -135,7 +135,7 @@ export class AuthController {
     @Post('/refresh')
     async refreshTokens(@GetCurrentUser() user: JwtRefreshPayload, @Res({ passthrough: true }) response: Response): Promise<AuthTokensDto> {
         const tokens = await this.authService.refreshTokens(user.sub, user.refreshToken);
-        const expiresDate = Date.now() + eval(this.configService.get('JWT_REFRESH_TOKEN_LIFETIME'));
+        const expiresDate = Date.now() + eval(this.configService.get('JWT_REFRESH_TOKEN_LIFETIME') || '60*60*24*30');
         response.cookie(
             'refreshToken',
             tokens.refreshToken,

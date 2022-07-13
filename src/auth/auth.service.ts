@@ -31,14 +31,14 @@ export class AuthService {
                     { sub: userId, email },
                     {
                         secret: this.configService.get('JWT_SECRET_ACCESS_KEY'),
-                        expiresIn: eval(this.configService.get('JWT_ACCESS_TOKEN_LIFETIME')),
+                        expiresIn: eval(this.configService.get('JWT_ACCESS_TOKEN_LIFETIME') || '60*60*24'),
                     },
                 ),
                 this.jwtService.signAsync(
                     { sub: userId, email },
                     {
                         secret: this.configService.get('JWT_SECRET_REFRESH_KEY'),
-                        expiresIn: eval(this.configService.get('JWT_REFRESH_TOKEN_LIFETIME')),
+                        expiresIn: eval(this.configService.get('JWT_REFRESH_TOKEN_LIFETIME') || '60*60*24*30'),
                     },
                 ),
             ]);
