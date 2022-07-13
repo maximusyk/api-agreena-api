@@ -10,6 +10,11 @@
 -   Swagger API documentation: `/api/docs`
     <br>
 -   Swagger API documentation JSON: `/api/docs-json`
+    <br>
+    <br>
+-   Remote API URL: `https://api-agreena-api.herokuapp.com`
+    <br>
+-   Local API URL: `http://localhost:5000`
 
 #
 
@@ -100,12 +105,22 @@ $ npm run test
 #
 
 ## Auth
+*Note: All users have the same **password*** – `strongPwd`
 
 Steps for get auth token:
 <br>
 
 1. Send `POST` request with your credentials(`email`, `password`) to API: `/auth/local/signin`. You will receive tokens
    pair: `accessToken` and `refreshToken`.
+   
+   *Credentials example:*
+   ```json
+   {
+      "email": "agreena.user1@gmail.com",
+      "password": "strongPwd"
+   }
+   ```
+   
 2. Use accessToken to other requests in API.
 3. Use refreshToken to get a new accessToken.
 4. To get new accessToken with refreshToken, you need to send POST request to API: `/auth/refresh` with
