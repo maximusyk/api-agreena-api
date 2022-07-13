@@ -23,10 +23,7 @@ $ npm install
 
 ## ENV
 
-You need to create few `.env` files as described in `.example.env` file:
-
--   `.development.env` - for development environment
--   `.production.env` - for production environment
+You need to create `.env` file as described in `.example.env` file
 
 #
 
