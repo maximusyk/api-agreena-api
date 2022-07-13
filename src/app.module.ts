@@ -21,11 +21,12 @@ console.log(ENV_PATH);
             inject: [ConfigService],
             useFactory: (config: ConfigService) => ({
                 dialect: config.get('DATABASE_DIALECT'),
-                host: config.get('DATABASE_HOST'),
-                port: config.get('DATABASE_PORT'),
+                // host: config.get('DATABASE_HOST'),
+                // port: config.get('DATABASE_PORT'),
                 username: config.get('DATABASE_USER'),
                 password: config.get('DATABASE_PASSWORD'),
                 database: config.get('DATABASE_NAME'),
+                url: config.get('DATABASE_URL'),
                 autoLoadModels: false,
                 synchronize: false,
                 models: [
