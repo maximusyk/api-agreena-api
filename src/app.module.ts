@@ -24,13 +24,6 @@ const ENV_PATH = process.env.NODE_ENV ? `.${process.env.NODE_ENV}.env` : '.env';
                 username: config.get('DATABASE_USER'),
                 password: config.get('DATABASE_PASSWORD'),
                 database: config.get('DATABASE_NAME'),
-                ssl: true,
-                dialectOptions: {
-                    ssl: {
-                        require: true,
-                        rejectUnauthorized: false,
-                    },
-                },
                 autoLoadModels: false,
                 synchronize: false,
                 models: [
