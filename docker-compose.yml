@@ -38,17 +38,9 @@ services:
       POSTGRES_USER: $DATABASE_USER
       POSTGRES_PASSWORD: $DATABASE_PASSWORD
       POSTGRES_DB: $DATABASE_NAME
-
-  adminer:
-    container_name: agreena_db_adminer
-    image: adminer
-    restart: always
-    networks:
-      - agreena-network
-    env_file:
-      - .production.env
-    ports:
-      - 8080:8080
+      PG_DATA: /var/lib/postgresql/data
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
 networks:
   agreena-network:
