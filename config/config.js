@@ -6,6 +6,13 @@ module.exports = {
         port: process.env.DATABASE_PORT,
         host: process.env.DATABASE_HOST,
         dialect: process.env.DATABASE_DIALECT,
+        ssl: true,
+        dialectOptions: {
+            ssl: {
+                require: true, // This will help you. But you will see nwe error
+                rejectUnauthorized: false, // This line will fix new error
+            },
+        },
         seederStorage: 'sequelize',
         logging: true,
     },
@@ -16,6 +23,13 @@ module.exports = {
         port: process.env.DATABASE_PORT,
         host: process.env.DATABASE_HOST,
         dialect: process.env.DATABASE_DIALECT,
+        ssl: true,
+        dialectOptions: {
+            ssl: {
+                require: true, // This will help you. But you will see nwe error
+                rejectUnauthorized: false, // This line will fix new error
+            },
+        },
         seederStorage: 'sequelize',
     },
     docker: {
@@ -25,6 +39,13 @@ module.exports = {
         port: process.env.DATABASE_PORT,
         host: process.env.DATABASE_HOST,
         dialect: process.env.DATABASE_DIALECT,
+        ssl: true,
+        dialectOptions: {
+            ssl: {
+                require: true, // This will help you. But you will see nwe error
+                rejectUnauthorized: false, // This line will fix new error
+            },
+        },
         seederStorage: 'sequelize',
     },
 };

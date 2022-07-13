@@ -26,6 +26,13 @@ console.log(ENV_PATH);
                 username: config.get('DATABASE_USER'),
                 password: config.get('DATABASE_PASSWORD'),
                 database: config.get('DATABASE_NAME'),
+                ssl: true,
+                dialectOptions: {
+                    ssl: {
+                        require: true, // This will help you. But you will see nwe error
+                        rejectUnauthorized: false, // This line will fix new error
+                    },
+                },
                 autoLoadModels: false,
                 synchronize: false,
                 models: [
