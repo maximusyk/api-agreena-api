@@ -71,7 +71,15 @@ export class UsersService {
 
     async update(id: string, updateUserDto: UpdateUserDto) {
         try {
-            return this.userRepository.update(updateUserDto, { where: { id } });
+            if (!id) {
+                throw new HttpException('id is required!', HttpStatus.BAD_REQUEST);
+            }
+
+            const userToUpdate = await this.findById(id);
+            
+            const updatedUser = await userToUpdate.update(updateUserDto);
+
+            return updatedUser.reload({ include: { all: true } });
         } catch (error) {
             throw new HttpException(error.message, error?.status || HttpStatus.BAD_REQUEST);
         }

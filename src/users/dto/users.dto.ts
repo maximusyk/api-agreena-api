@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsOptional, IsPhoneNumber, IsString } from 'class-validator';
+import { CertificateEntityDto } from '../../certificates/dto/certificates.dto';
 
 export class UserEntityDto {
     @ApiProperty()
@@ -23,14 +24,15 @@ export class UserEntityDto {
     @ApiProperty()
     password: string;
 
+    @ApiProperty({ isArray: true, type: () => CertificateEntityDto, required: false })
+    certificates?: CertificateEntityDto[];
+
     @ApiProperty()
     createdAt: Date;
 
     @ApiProperty()
     updatedAt: Date;
 
-    @ApiProperty()
-    deletedAt: Date;
 }
 
 export class CreateUserDto {

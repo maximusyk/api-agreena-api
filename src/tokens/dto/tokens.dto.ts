@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { UserEntityDto } from '../../users/dto/users.dto';
-import { User } from '../../users/entities/user.entity';
 
 export class TokenEntityDto {
     @ApiProperty()
@@ -13,7 +12,7 @@ export class TokenEntityDto {
     userId: string;
 
     @ApiProperty({ type: () => UserEntityDto })
-    user: User;
+    user: UserEntityDto;
 
     @ApiProperty()
     createdAt: Date;
@@ -21,8 +20,6 @@ export class TokenEntityDto {
     @ApiProperty()
     updatedAt: Date;
 
-    @ApiProperty()
-    deletedAt: Date;
 }
 
 export class CreateUpdateTokenDto {

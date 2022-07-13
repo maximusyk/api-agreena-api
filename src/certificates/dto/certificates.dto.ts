@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
 import { UserEntityDto } from '../../users/dto/users.dto';
-import { User } from '../../users/entities/user.entity';
 import { CertificateStatusEnum } from '../enums/certificates.enum';
 
 export class CertificateEntityDto {
@@ -17,8 +16,8 @@ export class CertificateEntityDto {
     @ApiProperty()
     ownerId: string;
 
-    @ApiProperty({ type: () => UserEntityDto })
-    owner: User;
+    @ApiProperty({ type: () => UserEntityDto, required: false })
+    owner?: UserEntityDto;
 
     @ApiProperty()
     createdAt: Date;
@@ -26,8 +25,6 @@ export class CertificateEntityDto {
     @ApiProperty()
     updatedAt: Date;
 
-    @ApiProperty()
-    deletedAt: Date;
 }
 
 export class CreateCertificateDto {

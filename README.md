@@ -63,7 +63,7 @@ $ docker-compose up -d --force-recreate
 $ docker-compose up -d --build api
 
 # postgres - if you need only PostgreSQL
-$ docker-compose up -d --build agreena_db adminer
+$ docker-compose up -d --build agreena_db agreena_db_adminer
 ```
 
 #
