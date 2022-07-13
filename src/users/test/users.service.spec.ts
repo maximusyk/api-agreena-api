@@ -29,15 +29,15 @@ describe('UsersController', () => {
             let user: User;
 
             beforeEach(async () => {
-                user = await usersController.findById({ id: userStub().id });
+                user = await usersService.findById(userStub.id);
             });
 
             test('then it should call usersService', () => {
-                expect(usersService.findById).toBeCalledWith(userStub().id);
+                expect(usersService.findById).toBeCalledWith(userStub.id);
             });
 
             test('then it should return user', () => {
-                expect(user).toEqual(userStub());
+                expect(user).toEqual(userStub);
             });
         });
     });
@@ -46,12 +46,12 @@ describe('UsersController', () => {
         describe('when findCurrentUser is called', () => {
                 let user: User;
                 const jwtAccessPayload: JwtAccessPayload = {
-                    sub: userStub().id,
-                    email: userStub().email,
+                    sub: userStub.id,
+                    email: userStub.email,
                 };
 
                 beforeEach(async () => {
-                    user = await usersController.findCurrentUser(jwtAccessPayload);
+                    user = await usersService.findById(jwtAccessPayload.sub);
                 });
 
                 test('then it should call usersService', () => {
@@ -59,7 +59,7 @@ describe('UsersController', () => {
                 });
 
                 test('then it should return user', () => {
-                    expect(user).toEqual(userStub());
+                    expect(user).toEqual(userStub);
                 });
             },
         );
@@ -70,7 +70,7 @@ describe('UsersController', () => {
             let users: User[];
 
             beforeEach(async () => {
-                users = await usersController.findAll();
+                users = await usersService.findAll();
             });
 
             test('then it should call usersService', () => {
@@ -78,7 +78,7 @@ describe('UsersController', () => {
             });
 
             test('then it should return users', () => {
-                expect(users).toEqual([userStub()]);
+                expect(users).toEqual([userStub]);
             });
         });
     });
@@ -90,14 +90,14 @@ describe('UsersController', () => {
 
             beforeEach(async () => {
                 createUserDto = {
-                    firstName: userStub().firstName,
-                    lastName: userStub().lastName,
-                    username: userStub().username,
-                    email: userStub().email,
-                    phone: userStub().phone,
-                    password: userStub().password,
+                    firstName: userStub.firstName,
+                    lastName: userStub.lastName,
+                    username: userStub.username,
+                    email: userStub.email,
+                    phone: userStub.phone,
+                    password: userStub.password,
                 };
-                user = await usersController.create(userStub());
+                user = await usersService.create(createUserDto);
             });
 
             test('then it should call usersService', () => {
@@ -105,7 +105,7 @@ describe('UsersController', () => {
             });
 
             test('then it should return user', () => {
-                expect(user).toEqual(userStub());
+                expect(user).toEqual(userStub);
             });
         });
     });
@@ -117,22 +117,22 @@ describe('UsersController', () => {
 
             beforeEach(async () => {
                 updateUserDto = {
-                    firstName: userStub().firstName,
-                    lastName: userStub().lastName,
-                    username: userStub().username,
-                    email: userStub().email,
-                    phone: userStub().phone,
-                    password: userStub().password,
+                    firstName: userStub.firstName,
+                    lastName: userStub.lastName,
+                    username: userStub.username,
+                    email: userStub.email,
+                    phone: userStub.phone,
+                    password: userStub.password,
                 };
-                user = await usersController.update({ id: userStub().id }, updateUserDto);
+                user = await usersService.update(userStub.id, updateUserDto);
             });
 
             test('then it should call usersService', () => {
-                expect(usersService.update).toHaveBeenCalledWith(userStub().id, updateUserDto);
+                expect(usersService.update).toHaveBeenCalledWith(userStub.id, updateUserDto);
             });
 
             test('then it should return user', () => {
-                expect(user).toEqual(userStub());
+                expect(user).toEqual(userStub);
             });
         });
     });

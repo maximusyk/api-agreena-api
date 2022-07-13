@@ -30,17 +30,17 @@ describe('CertificatesController', () => {
         describe('when transferCurrentUserCertificate is called', () => {
             let certificate: Certificate;
             const currentUser: JwtAccessPayload = {
-                sub: userStub().id,
-                email: userStub().email,
+                sub: userStub.id,
+                email: userStub.email,
             };
             const transferCertificateDto: TransferCertificateDto = {
                 ownerId: uuidv4(),
-                certificateId: certificateStub().id,
+                certificateId: certificateStub.id,
             };
 
             beforeEach(async () => {
-                certificate = await certificatesController.transferCurrentUserCertificate(
-                    currentUser,
+                certificate = await certificatesService.transferCurrentUserCertificate(
+                    currentUser.sub,
                     transferCertificateDto,
                 );
             });
@@ -53,7 +53,7 @@ describe('CertificatesController', () => {
             });
 
             test('then it should return certificate', () => {
-                expect(certificate).toEqual(certificateStub());
+                expect(certificate).toEqual(certificateStub);
             });
         });
     });
@@ -62,12 +62,12 @@ describe('CertificatesController', () => {
         describe('when findMyCerificates is called', () => {
                 let certificates: Certificate[];
                 const currentUser: JwtAccessPayload = {
-                    sub: userStub().id,
-                    email: userStub().email,
+                    sub: userStub.id,
+                    email: userStub.email,
                 };
 
                 beforeEach(async () => {
-                    certificates = await certificatesController.findMyCerificates(currentUser);
+                    certificates = await certificatesService.findMyCertificates(currentUser.sub);
                 });
 
                 test('then it should call CertificatesService', () => {
@@ -75,7 +75,7 @@ describe('CertificatesController', () => {
                 });
 
                 test('then it should return user', () => {
-                    expect(certificates).toEqual([certificateStub()]);
+                    expect(certificates).toEqual([certificateStub]);
                 });
             },
         );
@@ -86,7 +86,7 @@ describe('CertificatesController', () => {
             let certificates: Certificate[];
 
             beforeEach(async () => {
-                certificates = await certificatesController.findAvailable();
+                certificates = await certificatesService.findAvailableCertificates();
             });
 
             test('then it should call CertificatesService', () => {
@@ -94,7 +94,7 @@ describe('CertificatesController', () => {
             });
 
             test('then it should return users', () => {
-                expect(certificates).toEqual([certificateStub()]);
+                expect(certificates).toEqual([certificateStub]);
             });
         });
     });

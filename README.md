@@ -3,14 +3,13 @@
 </p>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
 ## Agreena Description
 
-- Swagger API documentation: `/api/docs`
-  <br>
-- Swagger API documentation JSON: `/api/docs-json`
+-   Swagger API documentation: `/api/docs`
+    <br>
+-   Swagger API documentation JSON: `/api/docs-json`
 
 #
 
@@ -24,7 +23,10 @@ $ npm install
 
 ## ENV
 
-Create `.env` file from `.example.env` and set your environment
+You need to create few `.env` files as described in `.example.env` file:
+
+-   `.development.env` - for development environment
+-   `.production.env` - for production environment
 
 #
 
@@ -48,10 +50,9 @@ $ npm run start:prod
 Before start docker run this commands:
 
 ```bash
-$ npm install 
+$ npm install
 $ npm run build
 $ docker-compose build --no-cache
-$ docker-compose up -d --force-recreate
 ```
 
 #
@@ -59,18 +60,16 @@ $ docker-compose up -d --force-recreate
 ## Start Docker
 
 ```bash
-# API
-$ docker-compose up -d --build api
-
-# postgres - if you need only PostgreSQL
-$ docker-compose up -d --build agreena_db agreena_db_adminer
+$ docker-compose up -d --force-recreate
 ```
 
 #
 
 ## DB Seed
 
-```bash 
+_Commands described below is running in Docker automatically_
+
+```bash
 # Create DB
 $ npx sequelize-cli db:create
 
@@ -79,15 +78,23 @@ $ npx sequelize-cli db:drop
 
 # Insert all seed
 $ npx sequelize-cli db:seed:all
- 
+
 # Undo all seed
 $ npx sequelize-cli db:seed:undo:all
 
 # Run migrations
 $ npx sequelize-cli db:migrate
- 
+
 # Undo all migrations
 $ npx sequelize-cli db:migrate:undo:all
+```
+
+#
+
+## Test
+
+```bash
+$ npm run test
 ```
 
 #

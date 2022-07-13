@@ -38,6 +38,8 @@ services:
       POSTGRES_USER: $DATABASE_USER
       POSTGRES_PASSWORD: $DATABASE_PASSWORD
       POSTGRES_DB: $DATABASE_NAME
+    volumes:
+      - agreena-db:/var/lib/postgresql/data
 
   adminer:
     container_name: agreena_db_adminer
@@ -53,3 +55,6 @@ services:
 networks:
   agreena-network:
     driver: bridge
+
+volumes:
+  agreena-db:
